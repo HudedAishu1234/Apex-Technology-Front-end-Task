@@ -1,4 +1,45 @@
-nd side effects.
+React + Vite
+This template offers a streamlined setup to get React running with Vite, including Hot Module Replacement (HMR) and basic ESLint configuration.
+
+Available Plugins:
+@vitejs/plugin-react: Utilizes Babel for Fast Refresh.
+@vitejs/plugin-react-swc: Leverages SWC for Fast Refresh.
+Frontend for Pokémon Trainer App:
+Installation Guide:
+Clone this repository.
+Navigate to the project directory: cd ApexFrontEndTask.
+Install dependencies: npm install.
+Start the development server: npm start or npm run dev.
+HomePage Component:
+The HomePage component serves as the main entry point for the Pokémon Trainer App. It retrieves a list of Pokémon owners from an API and displays them in a dropdown menu. When an owner is selected, the PokemonOwnerStats component is rendered with the corresponding owner's ID.
+
+Key Features:
+
+Shows a loading message while fetching data from the API.
+Handles errors and displays an error message if the API request fails.
+Renders a dropdown menu populated with Pokémon owners.
+Allows users to select an owner and view their statistics.
+Includes three buttons for future features: Pokémon Go, Pokémon Flee, and Pokémon Cease.
+Technical Details:
+
+Uses React Hooks (useState and useEffect) to manage state and side effects.
+Utilizes Axios for API requests.
+Imports the PokemonOwnerStats component to display owner statistics.
+Applies styles through the HomePage.css file.
+PokemonList Component:
+The PokemonList component presents a table-based interface for displaying a list of Pokémon users. Each user is associated with a Pokémon and its respective ability. The component also provides functionality to add, edit, and delete Pokémon users.
+
+Key Features:
+
+Displays a table of Pokémon users.
+Allows users to add new Pokémon users.
+Enables editing of existing Pokémon users.
+Supports deletion of Pokémon users.
+Includes a modal for editing user details.
+Fetches Pokémon names and abilities from the PokeAPI.
+Technical Details:
+
+Uses React Hooks (useState and useEffect) for state management and side effects.
 Employs Axios for API requests to the PokeAPI and the backend server.
 Utilizes React Router for client-side routing.
 Leverages React Icons for iconography.
