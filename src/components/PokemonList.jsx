@@ -1,61 +1,55 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { MdDelete } from "react-icons/md";
+import { FiEdit } from "react-icons/fi";
 import './PokemonList.css';
 import { API } from './API';
-
 
 function PokemonList() {
     const [pokemonUsers, setPokemonUsers] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingUser, setEditingUser] = useState(null);
-    const [formData, setFormData] = useState({
-        pokemonOwnerName: '',
-        pokemonName: '',
-        pokemonAbility: ''
-    });
-
     const [pokemonList, setPokemonList] = useState([]);
-  const [selectedPokemon, setSelectedPokemon] = useState(null);
+    const [selectedPokemon, setSelectedPokemon] = useState(null);
 
-  useEffect(() => {
-    // Fetch the list of Pokemon names when the component mounts
-    const fetchPokemonList = async () => {
-      try {
-        const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=1000');
-        setPokemonList(response.data.results);
-      } catch (error) {
-        console.error('Error fetching Pokemon list:', error);
-      }
-    };
-    fetchPokemonList();
-  }, []);
+    useEffect(() => {
+        // Fetch the list of Pokemon names when the component mounts
+        const fetchPokemonList = async () => {
+            try {
+                const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=1000');
+                setPokemonList(response.data.results);
+            } catch (error) {
+                console.error('Error fetching Pokemon list:', error);
+            }
+        };
+        fetchPokemonList();
+    }, []);
 
-  const handlePokemonSelect = async (e) => {
-    const selectedName = e.target.value;
-    setEditingUser(prev => ({
-      ...prev,
-      pokemons: [{ ...prev.pokemons[0], pokemonName: selectedName, pokemonAbility: '' }]
-    }));
-    if (selectedName) {
-      try {
-        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${selectedName}`);
-        const abilities = response.data.abilities.map(ability => ability.ability.name);
-        setSelectedPokemon({ name: selectedName, abilities });
-        if (abilities.length === 1) {
-          setEditingUser(prev => ({
+    const handlePokemonSelect = async (e) => {
+        const selectedName = e.target.value;
+        setEditingUser(prev => ({
             ...prev,
-            pokemons: [{ ...prev.pokemons[0], pokemonAbility: abilities[0] }]
-          }));
+            pokemons: [{ ...prev.pokemons[0], pokemonName: selectedName, pokemonAbility: '' }]
+        }));
+        if (selectedName) {
+            try {
+                const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${selectedName}`);
+                const abilities = response.data.abilities.map(ability => ability.ability.name);
+                setSelectedPokemon({ name: selectedName, abilities });
+                if (abilities.length === 1) {
+                    setEditingUser(prev => ({
+                        ...prev,
+                        pokemons: [{ ...prev.pokemons[0], pokemonAbility: abilities[0] }]
+                    }));
+                }
+            } catch (error) {
+                console.error('Error fetching Pokemon details:', error);
+            }
+        } else {
+            setSelectedPokemon(null);
         }
-      } catch (error) {
-        console.error('Error fetching Pokemon details:', error);
-      }
-    } else {
-      setSelectedPokemon(null);
-    }
-  };
-
+    };
 
     useEffect(() => {
         fetchPokemonUsers();
@@ -63,7 +57,7 @@ function PokemonList() {
 
     const fetchPokemonUsers = async () => {
         try {
-            const response = await axios.get('/api/pokemon');
+            const response = await axios.get(`${API}/api/pokemon`);
             setPokemonUsers(response.data);
         } catch (error) {
             console.error('Error fetching Pokemon users:', error);
@@ -72,7 +66,7 @@ function PokemonList() {
 
     const handleDelete = async (pokemonOwnerName) => {
         try {
-            await axios.delete(`/api/pokemon/${pokemonOwnerName}`);
+            await axios.delete(`${API}/api/pokemon/${pokemonOwnerName}`);
             fetchPokemonUsers(); // Refresh the list after deletion
         } catch (error) {
             console.error('Error deleting Pokemon user:', error);
@@ -123,9 +117,9 @@ function PokemonList() {
             <table className="pokemon-table">
                 <thead>
                     <tr>
-                        <th>PokemonOwnerName</th>
+                        <th>Pokemon Owner Name</th>
                         <th>Pokemon Name</th>
-                        <th>PokemonAbility</th>
+                        <th>Pokemon Ability</th>
                         <th>No. of pokemon</th>
                         <th>Add pokemon</th>
                         <th>Edit</th>
@@ -140,20 +134,20 @@ function PokemonList() {
                             <td>{user.pokemons[0].pokemonAbility}</td>
                             <td>{user.pokemons.length}</td>
                             <td>
-                                <Link to={`/add-pokemon/${user.pokemonOwnerName}`} className="add-btn">+</Link>
+                                <Link to="/add-pokemon" className="add-btn">+</Link> {/* Fix Link path */}
                             </td>
                             <td>
-                                <button onClick={() => handleEdit(user)} className="edit-btn">Edit</button>
+                                <button onClick={() => handleEdit(user)} className="edit-btn"><FiEdit size={30} /></button>
                             </td>
                             <td>
-                                <button onClick={() => handleDelete(user.pokemonOwnerName)} className="delete-btn">Delete</button>
+                                <button onClick={() => handleDelete(user.pokemonOwnerName)} className="delete-btn"><MdDelete size={30}/></button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
 
-            {isModalOpen && (
+            {isModalOpen && editingUser && editingUser.pokemons && editingUser.pokemons[0] && (
                 <div className="modal">
                     <div className="modal-content">
                         <h2>Edit Pokemon User</h2>
@@ -200,7 +194,7 @@ function PokemonList() {
                                 </select>
                             </div>
                             <button type="submit">Update</button>
-                            <button type="button" onClick={() => setIsModalOpen(false)}>Cancel</button>
+                            <button className='cancel-btn' type="button" onClick={() => setIsModalOpen(false)}>Cancel</button>
                         </form>
                     </div>
                 </div>
