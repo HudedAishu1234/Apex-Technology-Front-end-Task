@@ -1,0 +1,81 @@
+.add-pokemon-to-user {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+
+ 
+  margin: 20px auto;
+  padding: 25px;
+  background-color: #eb98bf;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  font-family: 'Arial', sans-serif;
+}
+
+.input-container {
+  font-weight: bold;
+  gap: 10px;
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.add-pokemon-to-user h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.75em;
+  letter-spacing: 0.05em;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-size: 16px;
+  box-sizing: border-box;
+  display: block;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #7e4167;
+  box-shadow: 0 0 5px rgba(126, 65, 103, 0.5);
+  outline: none;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  background-color: #875179;
+  color: rgb(224, 214, 214);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s, box-shadow 0.2s;
+  font-size: 1em;
+  margin-top: 15px;
+}
+
+button:hover {
+  background-color: #7e4167;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+button:active {
+  background-color: #6d375f;
+  transform: translateY(2px);
+  box-shadow: 0 6px #666;
+}
+
