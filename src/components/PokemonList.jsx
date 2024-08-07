@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './PokemonList.css';
+import { API } from './API';
+
 
 function PokemonList() {
     const [pokemonUsers, setPokemonUsers] = useState([]);
@@ -79,7 +81,7 @@ function PokemonList() {
 
     const handleDeleteAll = async () => {
         try {
-            await axios.delete('/api/pokemon');
+            await axios.delete(`${API}/api/pokemon`);
             fetchPokemonUsers(); // Refresh the list after deletion
         } catch (error) {
             console.error('Error deleting all Pokemon users:', error);
@@ -94,7 +96,7 @@ function PokemonList() {
     const handleUpdate = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(`/api/pokemon/${editingUser.pokemonOwnerName}`, editingUser);
+            await axios.put(`${API}/api/pokemon/${editingUser.pokemonOwnerName}`, editingUser);
             setIsModalOpen(false);
             fetchPokemonUsers(); // Refresh the list after update
         } catch (error) {

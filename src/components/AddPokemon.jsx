@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import './AddPokemon.css';
+import { API } from './API';
 
 function AddPokemon() {
   const [formData, setFormData] = useState({
@@ -59,7 +60,7 @@ function AddPokemon() {
     const pokemonWithId = { ...formData, id: uuidv4() };
     console.log('Form submitted with data:', pokemonWithId);
     try {
-      const response = await axios.post('/api/pokemon', pokemonWithId);
+      const response = await axios.post(`${API}/api/pokemon`, pokemonWithId);
       console.log('Server response:', response.data);
 
       // Reset form after successful submission

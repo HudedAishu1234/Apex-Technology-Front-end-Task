@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './AddPokemonToUser.css';
+import { API } from './API';
+
 
 function AddPokemonToUser() {
   const [pokemonOwners, setPokemonOwners] = useState([]);
@@ -21,7 +23,7 @@ function AddPokemonToUser() {
 
   const fetchPokemonOwners = async () => {
     try {
-      const response = await axios.get('/api/pokemon');
+      const response = await axios.get(`${API}/api/pokemon`);
       setPokemonOwners(response.data);
     } catch (error) {
       console.error('Error fetching Pokemon owners:', error);
@@ -69,7 +71,7 @@ function AddPokemonToUser() {
       return;
     }
     try {
-      await axios.post(`/api/pokemon/${selectedOwner}/add`, pokemonData);
+      await axios.post(`${API}/api/pokemon/${selectedOwner}/add`, pokemonData);
       alert('Pokemon added successfully!');
       navigate('/');
     } catch (error) {

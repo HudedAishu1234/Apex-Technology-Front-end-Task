@@ -1,6 +1,7 @@
 import React from 'react';
 import Pokemon from './Pokemon';
 
+
 const PokemonContainer = ({ pokemons, isMoving, isPokemonFleeing, isPokemonFrozen }) => {
   return (
     <div className="pokemon-container">
